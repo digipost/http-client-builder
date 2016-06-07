@@ -1,0 +1,25 @@
+sudo: false
+cache:
+  directories:
+  - "$HOME/.m2/repository"
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
+env:
+  global:
+  - secure: TiROHm3llwuymkekje17Mr2IuwDjUC0Dmq6Eg/qHXnM9r6vFd4ypVJMooSsCiZ/pMtY/Updxff2m1+NeL2yB+5T9uc24r8O2Oi7DcaH75RSCAAdJdxX67voPuieqaVeGTEGSO38qFQxk08DH4kDC3qnsOdLy6WmluQxPgAbq8Gj+u79Ruvp31ccVGFyom+YkgqbiqIiYffYywOQVLUamKsS1zVikrcHtHko3xg1fTtMeVA8S3PSaTck3WnY2LWaHSyA+4TrUXVRblLUFdi4QlEqylGwYA+DmhjSqo622EoYvKgd/8HlCkWjCNsVCG7Vtqc0605wt+aTCKJA7a8txERIH5tcR/bucZKLChQvaK/l0puMuOU2wMbwChjvI1I3RDBsiiTXcs+bXnwpyjYFJ+dZ0u+3xfhWtzR4i+SUm3X8Pq99MW4fZfHjc8yZiHbYGdujXBrAq/iLRxPFhGOxlpu5Tw731+mD1m5N+ZSilLfqNcnPu7SmNhdg0Smpvgd1bXGGialfHNNHUKWCZO37QfrM66nIpG+ArmlEzBpbEWT2BZptcvnWxPb03L3tqUKXaYhc7Mve2YETYqApZ61d75cETR4g9tJlmWS/LR50Ay8Pb9FMSTqI24JRljUc04+BpkyXDW0M+O47ySBr6i5pUe+/2nVv6KGtHEK41Y2bWf/M=
+  - secure: BzeYik4gVWdnuPYdZaWsb0c3UpCj0eFEPTntMjWejFUg52YbpPBnM8xX/XT4Xkgxk9wzDgodLEJzwCG8X/pybqsAMRzMAxfnWyOS3MpEqZTOjr3zkHFWGmGO0KO/kYLEDS+qaQAS7/z085vt8C3X/zJWzumXHmpCzPJNZWQT79LkXLBcZ+zjagxV9FkjyukfxRkA4J7FyLkxlt/Qbgf+tnYIVJLp9TkMGG5lsFqxCIwLVN5cZWAPVypbx0inJ0F2dqGDpR59DClY1sNyRDMkYIyL7tkebjdXmp4fTvVCt2qzbkCNaM48WRY7HqtJQX2kJskI8cRlgYVvXKxr3SWE85cFQrPI1t1AEyQqqh/aujfoSI5DtO/kbV/a2D7yoF0PqXPB6ON9khX11dRr2nCxaDfxPmEEBuYuZRpTuLb1t+ksVzgrPzmpLBUvF+ofxcRL4Z4JI5QBED+6XzMY1UZCu9aAw2ljKQEfb5QRcZtn54Yye3CiTH0yjMbFWPQVR+ar82BnHq15SOl0HUz5Wan42WBvmSnZdu9BsqpRKyuNsddqbP+DvystQA3mwrgwqgiNOZXouGbKxYHFQgGLToNVA8yNOPZyqH2GcY0lA3OfpWU8aN1KvbZlIDs1R+dPQrhlSqQt2xwFXAN3fyqywcvwiqmU4uqE1R1pa0su1Tywv9U=
+
+language: java
+jdk:
+- oraclejdk8
+before_install:
+- echo "<settings><servers><server><id>sonatype-oss-nexus-snapshots</id><username>\${env.SONATYPE_USER}</username><password>\${env.SONATYPE_PASS}</password></server></servers></settings>"
+  > ~/.m2/deploy-settings.xml
+install:
+- export mavenBuildGoal="$([[ ${TRAVIS_TAG} == '' ]] && echo deploy || echo verify)"
+- echo "Maven will ${mavenBuildGoal}"
+- mvn clean ${mavenBuildGoal} --settings ~/.m2/deploy-settings.xml
+script:
+- echo "no build script"
