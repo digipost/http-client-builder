@@ -45,6 +45,10 @@ public class DigipostHttpClientSettings {
         return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
     }
 
+    public DigipostHttpClientSettings useProxy(String proxyHostUrl) {
+        return useProxy(HttpHost.create(proxyHostUrl));
+    }
+
     public DigipostHttpClientSettings useProxy(HttpHost httpProxy) {
         return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
     }
