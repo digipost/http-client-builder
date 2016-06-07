@@ -27,9 +27,9 @@
     </properties>
 
     <scm>
-		<connection>scm:git:ssh://bekk@bonnyrigg.os.ergo.no:/data/gitrepos/digipost-http-client.git</connection>
-		<developerConnection>scm:git:ssh://bekk@bonnyrigg.os.ergo.no:/data/gitrepos/digipost-http-client.git</developerConnection>
-		<url>ssh://bekk@bonnyrigg.os.ergo.no:/data/gitrepos/digipost-http-client.git</url>
+		<connection>scm:git:ssh://github.com/digipost/digipost-http-client.git</connection>
+		<developerConnection>scm:git:ssh://github.com/digipost/digipost-http-client.git</developerConnection>
+		<url>ssh://github.com/digipost/digipost-http-client.git</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -37,11 +37,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <!--
-            	Oppgrader til 4.4.x ikke før denne er fikset:
-            	https://issues.apache.org/jira/browse/HTTPCLIENT-1610
-             -->
-            <version>4.3.6</version>
+            <version>4.5.2</version>
             <exclusions>
             	<exclusion>
             		<groupId>commons-logging</groupId>
@@ -52,7 +48,7 @@
         <dependency>
         	<groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.3.2</version>
+            <version>4.4.4</version>
         </dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -148,6 +144,26 @@
         			</execution>
         		</executions>
         	</plugin>
+			<plugin>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<excludes>
+										<exclude>commons-logging</exclude>
+									</excludes>
+									<searchTransitive>true</searchTransitive>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 
