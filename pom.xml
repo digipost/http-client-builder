@@ -24,9 +24,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:ssh://github.com/digipost/http-client-builder.git</connection>
-        <developerConnection>scm:git:ssh://github.com/digipost/http-client-builder.git</developerConnection>
-        <url>ssh://github.com/digipost/http-client-builder.git</url>
+        <connection>scm:git:git@github.com:digipost/http-client-builder.git</connection>
+        <developerConnection>scm:git:git@github.com:digipost/http-client-builder.git</developerConnection>
+        <url>https://github.com/digipost/http-client-builder</url>
         <tag>HEAD</tag>
     </scm>
 
