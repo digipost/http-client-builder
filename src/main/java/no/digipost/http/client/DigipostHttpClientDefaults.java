@@ -63,6 +63,22 @@ public final class DigipostHttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_NORMAL = MAX_CONNECTIONS_PER_ROUTE_NORMAL;
 
 
+    /**
+     * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE}</strong> connections
+     * <em>per route</em> for intermediate amount of traffic.
+     * <p>
+     * Apache HttpClient default: 2
+     */
+    public static final int MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE = 20;
+
+    /**
+     * Maximum <strong>{@value #MAX_CONNECTIONS_TOTAL_INTERMEDIATE}</strong>
+     * total connections for intermediate amount of traffic.
+     * <p>
+     * Apache HttpClient default: 20
+     */
+    public static final int MAX_CONNECTIONS_TOTAL_INTERMEDIATE = MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE;
+
 
     /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_MEDIUM}</strong> connections
@@ -102,6 +118,7 @@ public final class DigipostHttpClientDefaults {
 
 
     public static final ConnectionAmount CONNECTION_AMOUNT_NORMAL = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
+    public static final ConnectionAmount CONNECTION_AMOUNT_INTERMEDIATE = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_INTERMEDIATE, MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE);
     public static final ConnectionAmount CONNECTION_AMOUNT_MEDIUM = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
     public static final ConnectionAmount CONNECTION_AMOUNT_HIGH = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
