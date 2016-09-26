@@ -207,6 +207,7 @@
                         <exclude>**/NOTICE.template</exclude>
                         <exclude>LICENSE*</exclude>
                         <exclude>pom.xml</exclude>
+                        <exclude>.editorconfig</exclude>
                     </excludes>
                 </configuration>
                 <executions>
