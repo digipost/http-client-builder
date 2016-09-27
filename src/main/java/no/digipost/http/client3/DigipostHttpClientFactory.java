@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client;
+package no.digipost.http.client3;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.ConnectionConfig;
@@ -21,7 +21,7 @@ import org.apache.http.config.SocketConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import static no.digipost.http.client.DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS;
+import static no.digipost.http.client3.DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS;
 import static org.apache.http.config.ConnectionConfig.DEFAULT;
 
 public final class DigipostHttpClientFactory {
