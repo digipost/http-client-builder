@@ -11,7 +11,7 @@
     <artifactId>http-client-builder3</artifactId>
     <name>Digipost HTTP Client Builder</name>
     <description>Apache HTTP Client configured with sensible defaults.</description>
-    <version>2.1-SNAPSHOT</version>
+    <version>3.0</version>
 
     <prerequisites>
         <maven>3.0</maven>
@@ -27,7 +27,7 @@
         <connection>scm:git:git@github.com:digipost/http-client-builder.git</connection>
         <developerConnection>scm:git:git@github.com:digipost/http-client-builder.git</developerConnection>
         <url>https://github.com/digipost/http-client-builder</url>
-        <tag>HEAD</tag>
+        <tag>3.0</tag>
     </scm>
 
     <dependencies>
