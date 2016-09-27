@@ -8,7 +8,7 @@
         <version>1</version>
     </parent>
 
-    <artifactId>http-client-builder</artifactId>
+    <artifactId>http-client-builder3</artifactId>
     <name>Digipost HTTP Client Builder</name>
     <description>Apache HTTP Client configured with sensible defaults.</description>
     <version>2.1-SNAPSHOT</version>
