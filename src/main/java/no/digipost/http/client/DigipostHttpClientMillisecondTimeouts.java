@@ -38,17 +38,11 @@ public final class DigipostHttpClientMillisecondTimeouts {
     public final int connectionRequest;
 
     DigipostHttpClientMillisecondTimeouts(int socket, int connect, int connectionRequest) {
-        this.socket = zeroOrGreater(socket, "socket timeout");
-        this.connect = zeroOrGreater(connect, "connect timeout");
-        this.connectionRequest = zeroOrGreater(connectionRequest, "connection request timeout");
+        this.socket = Validation.NOrGreater(socket, 0, "socket timeout");
+        this.connect = Validation.NOrGreater(connect, 0, "connect timeout");
+        this.connectionRequest = Validation.NOrGreater(connectionRequest, 0, "connection request timeout");
     }
 
-    private int zeroOrGreater(int value, String nameOfValue) {
-        if (value < 0) {
-            throw new IllegalArgumentException(nameOfValue + " must be 0 or greater, but was " + value);
-        }
-        return value;
-    }
 
     public DigipostHttpClientMillisecondTimeouts all(int timeoutMs) {
         return new DigipostHttpClientMillisecondTimeouts(timeoutMs, timeoutMs, timeoutMs);

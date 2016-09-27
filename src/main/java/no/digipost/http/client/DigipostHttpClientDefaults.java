@@ -118,7 +118,6 @@ public final class DigipostHttpClientDefaults {
 
 
     public static final ConnectionAmount CONNECTION_AMOUNT_NORMAL = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
-    public static final ConnectionAmount CONNECTION_AMOUNT_INTERMEDIATE = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_INTERMEDIATE, MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE);
     public static final ConnectionAmount CONNECTION_AMOUNT_MEDIUM = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
     public static final ConnectionAmount CONNECTION_AMOUNT_HIGH = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
@@ -128,7 +127,9 @@ public final class DigipostHttpClientDefaults {
         public final int maxTotal;
         public final int maxPerRoute;
 
-        private ConnectionAmount(int maxTotal, int maxPerRoute) {
+        public ConnectionAmount(int maxTotal, int maxPerRoute) {
+            Validation.NOrGreater(maxTotal, 1, "Max total connections");
+            Validation.NOrGreater(maxPerRoute, 1, "Max connections per route");
             this.maxTotal = maxTotal;
             this.maxPerRoute = maxPerRoute;
         }
