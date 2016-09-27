@@ -1,5 +1,5 @@
 .idea
-digipost-http-client.iml
+*.iml
 target
 .settings
 .classpath
