@@ -15,12 +15,14 @@
  */
 package no.digipost.http.client;
 
-public class Validation {
+final class Validation {
 
-    public static int NOrGreater(int value, int threshold, String nameOfValue) {
+    static int equalOrGreater(int value, int threshold, String nameOfValue) {
         if (value < threshold) {
             throw new IllegalArgumentException(nameOfValue + " must be " + threshold + " or greater, but was " + value);
         }
         return value;
     }
+
+    private Validation(){}
 }

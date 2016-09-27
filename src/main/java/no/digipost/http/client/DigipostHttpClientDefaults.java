@@ -128,8 +128,8 @@ public final class DigipostHttpClientDefaults {
         public final int maxPerRoute;
 
         public ConnectionAmount(int maxTotal, int maxPerRoute) {
-            Validation.NOrGreater(maxTotal, 1, "Max total connections");
-            Validation.NOrGreater(maxPerRoute, 1, "Max connections per route");
+            Validation.equalOrGreater(maxTotal, 1, "Max total connections");
+            Validation.equalOrGreater(maxPerRoute, 1, "Max connections per route");
             this.maxTotal = maxTotal;
             this.maxPerRoute = maxPerRoute;
         }

@@ -38,9 +38,9 @@ public final class DigipostHttpClientMillisecondTimeouts {
     public final int connectionRequest;
 
     DigipostHttpClientMillisecondTimeouts(int socket, int connect, int connectionRequest) {
-        this.socket = Validation.NOrGreater(socket, 0, "socket timeout");
-        this.connect = Validation.NOrGreater(connect, 0, "connect timeout");
-        this.connectionRequest = Validation.NOrGreater(connectionRequest, 0, "connection request timeout");
+        this.socket = Validation.equalOrGreater(socket, 0, "socket timeout");
+        this.connect = Validation.equalOrGreater(connect, 0, "connect timeout");
+        this.connectionRequest = Validation.equalOrGreater(connectionRequest, 0, "connection request timeout");
     }
 
 
