@@ -6,7 +6,7 @@ A tiny library for building instances of [Apache HttpClient](https://hc.apache.o
 ```xml
 <dependency>
     <groupId>no.digipost</groupId>
-    <artifactId>http-client-builder</artifactId>
-    <version>2.0</version>
+    <artifactId>http-client-builder3</artifactId>
+    <version>3.0</version>
 </dependency>
 ```
