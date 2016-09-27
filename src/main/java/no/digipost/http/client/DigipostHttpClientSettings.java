@@ -15,7 +15,6 @@
  */
 package no.digipost.http.client;
 
-import no.digipost.http.client.DigipostHttpClientDefaults.ConnectionAmount;
 import org.apache.http.HttpHost;
 import org.apache.http.config.ConnectionConfig;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public class DigipostHttpClientSettings {
         return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
     }
 
-    public DigipostHttpClientSettings connections(ConnectionAmount connectionAmount) {
+    public DigipostHttpClientSettings connections(DigipostHttpClientConnectionAmount connectionAmount) {
         return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
     }
 
@@ -84,13 +83,13 @@ public class DigipostHttpClientSettings {
     final HttpHost httpProxy;
     final Logger logger;
     final ConnectionConfig connectionConfig;
-    final ConnectionAmount connectionAmount;
+    final DigipostHttpClientConnectionAmount connectionAmount;
     final DigipostHttpClientMillisecondTimeouts timeoutsMs;
 
     private DigipostHttpClientSettings(
             Logger instantiationLogger,
             ConnectionConfig connectionConfig,
-            ConnectionAmount connectionAmount,
+            DigipostHttpClientConnectionAmount connectionAmount,
             HttpHost proxy,
             DigipostHttpClientMillisecondTimeouts timeoutsMs) {
 

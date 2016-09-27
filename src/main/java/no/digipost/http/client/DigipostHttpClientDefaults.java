@@ -64,23 +64,6 @@ public final class DigipostHttpClientDefaults {
 
 
     /**
-     * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE}</strong> connections
-     * <em>per route</em> for intermediate amount of traffic.
-     * <p>
-     * Apache HttpClient default: 2
-     */
-    public static final int MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE = 20;
-
-    /**
-     * Maximum <strong>{@value #MAX_CONNECTIONS_TOTAL_INTERMEDIATE}</strong>
-     * total connections for intermediate amount of traffic.
-     * <p>
-     * Apache HttpClient default: 20
-     */
-    public static final int MAX_CONNECTIONS_TOTAL_INTERMEDIATE = MAX_CONNECTIONS_PER_ROUTE_INTERMEDIATE;
-
-
-    /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_MEDIUM}</strong> connections
      * <em>per route</em> for medium amount of traffic.
      * <p>
@@ -115,25 +98,10 @@ public final class DigipostHttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_HIGH = MAX_CONNECTIONS_PER_ROUTE_HIGH;
 
 
+    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_NORMAL = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
+    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_MEDIUM = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
+    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
-
-    public static final ConnectionAmount CONNECTION_AMOUNT_NORMAL = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
-    public static final ConnectionAmount CONNECTION_AMOUNT_MEDIUM = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
-    public static final ConnectionAmount CONNECTION_AMOUNT_HIGH = new ConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
-
-
-    public static final class ConnectionAmount {
-
-        public final int maxTotal;
-        public final int maxPerRoute;
-
-        public ConnectionAmount(int maxTotal, int maxPerRoute) {
-            Validation.equalOrGreater(maxTotal, 1, "Max total connections");
-            Validation.equalOrGreater(maxPerRoute, 1, "Max connections per route");
-            this.maxTotal = maxTotal;
-            this.maxPerRoute = maxPerRoute;
-        }
-    }
 
     private DigipostHttpClientDefaults() {}
 }
