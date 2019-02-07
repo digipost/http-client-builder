@@ -1,5 +1,4 @@
-Digipost HTTP Client Builder
-=======================================
+# Digipost HTTP Client Builder
 
 A tiny library for building instances of [Apache HttpClient](https://hc.apache.org/httpcomponents-client-ga/) configured with sensible defaults.
 
