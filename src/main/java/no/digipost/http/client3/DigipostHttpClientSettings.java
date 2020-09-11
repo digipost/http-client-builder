@@ -15,13 +15,14 @@
  */
 package no.digipost.http.client3;
 
-import org.apache.http.HttpHost;
-import org.apache.http.config.ConnectionConfig;
+import org.apache.hc.core5.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.helpers.NOPLogger;
 
+import java.net.URISyntaxException;
+
 /**
- * A subset of configuration parameters for new {@link org.apache.http.impl.client.CloseableHttpClient http clients}.
+ * A subset of configuration parameters for new {@link org.apache.hc.client5.http.impl.classic.CloseableHttpClient http clients}.
  *
  * For complete configuration facilities, use the builder acquired from
  * {@link DigipostHttpClientFactory#createDefaultBuilder()}.
@@ -30,30 +31,33 @@ public class DigipostHttpClientSettings {
 
     public static final DigipostHttpClientSettings DEFAULT = new DigipostHttpClientSettings(
             NOPLogger.NOP_LOGGER,
-            DigipostHttpClientFactory.createDefaultConnectionConfig(),
             DigipostHttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
             null,
             DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS);
 
 
     public DigipostHttpClientSettings logConfigurationTo(Logger logger) {
-        return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
     }
 
     public DigipostHttpClientSettings connections(DigipostHttpClientConnectionAmount connectionAmount) {
-        return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
     }
 
     public DigipostHttpClientSettings useProxy(String proxyHostUrl) {
-        return useProxy(HttpHost.create(proxyHostUrl));
+        try {
+            return useProxy(HttpHost.create(proxyHostUrl));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public DigipostHttpClientSettings useProxy(HttpHost httpProxy) {
-        return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
     }
 
     public DigipostHttpClientSettings timeouts(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
-        return new DigipostHttpClientSettings(logger, connectionConfig, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
     }
 
 
@@ -82,19 +86,16 @@ public class DigipostHttpClientSettings {
 
     final HttpHost httpProxy;
     final Logger logger;
-    final ConnectionConfig connectionConfig;
     final DigipostHttpClientConnectionAmount connectionAmount;
     final DigipostHttpClientMillisecondTimeouts timeoutsMs;
 
     private DigipostHttpClientSettings(
             Logger instantiationLogger,
-            ConnectionConfig connectionConfig,
             DigipostHttpClientConnectionAmount connectionAmount,
             HttpHost proxy,
             DigipostHttpClientMillisecondTimeouts timeoutsMs) {
 
         this.logger = instantiationLogger;
-        this.connectionConfig = connectionConfig;
         this.connectionAmount = connectionAmount;
         this.httpProxy = proxy;
         this.timeoutsMs = timeoutsMs;

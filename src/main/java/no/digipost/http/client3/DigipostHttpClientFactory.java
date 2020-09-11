@@ -15,17 +15,15 @@
  */
 package no.digipost.http.client3;
 
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.config.ConnectionConfig;
-import org.apache.http.config.SocketConfig;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.core5.util.Timeout;
 
 import static no.digipost.http.client3.DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS;
-import static org.apache.http.config.ConnectionConfig.DEFAULT;
 
 public final class DigipostHttpClientFactory {
-
 
     /**
      * Creates an {@link CloseableHttpClient HttpClient} with safe and sensible
@@ -44,11 +42,8 @@ public final class DigipostHttpClientFactory {
      * @return a new HttpClient
      */
     public static CloseableHttpClient create(DigipostHttpClientSettings settings) {
-        return createBuilder(settings).build();
+        return createBuilder(settings, DigipostHttpClientConnectionManagerFactory.create(settings)).build();
     }
-
-
-
 
     /**
      * Create an {@link HttpClientBuilder} with safe and sensible
@@ -57,10 +52,8 @@ public final class DigipostHttpClientFactory {
      * @return a safe and sensible HttpClientBuilder
      */
     public static HttpClientBuilder createDefaultBuilder() {
-        return createBuilder(DigipostHttpClientSettings.DEFAULT);
+        return createBuilder(DigipostHttpClientSettings.DEFAULT, DigipostHttpClientConnectionManagerFactory.createDefault());
     }
-
-
 
 
     /**
@@ -69,7 +62,7 @@ public final class DigipostHttpClientFactory {
      * @param settings configuration parameters
      * @return a new HttpClientBuilder
      */
-    public static HttpClientBuilder createBuilder(DigipostHttpClientSettings settings) {
+    public static HttpClientBuilder createBuilder(DigipostHttpClientSettings settings, PoolingHttpClientConnectionManager clientConnectionManager) {
         if (settings.timeoutsMs.isPotentiallyDangerous()) {
             settings.logger.warn("New http client with potential dangerous settings. These settings should probably not be used in production:\n{}", settings);
         } else {
@@ -77,14 +70,10 @@ public final class DigipostHttpClientFactory {
         }
 
         return HttpClientBuilder.create()
-                .setDefaultConnectionConfig(settings.connectionConfig)
-                .setDefaultSocketConfig(createSocketConfig(settings.timeoutsMs))
                 .setDefaultRequestConfig(createRequestConfig(settings.timeoutsMs))
-                .setMaxConnTotal(settings.connectionAmount.maxTotal)
-                .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute)
+                .setConnectionManager(clientConnectionManager)
                 .setProxy(settings.httpProxy);
     }
-
 
 
     public static RequestConfig createDefaultRequestConfig() {
@@ -93,24 +82,9 @@ public final class DigipostHttpClientFactory {
 
     public static RequestConfig createRequestConfig(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
         return RequestConfig.custom()
-                .setConnectionRequestTimeout(timeoutsMs.connectionRequest)
-                .setConnectTimeout(timeoutsMs.connect)
-                .setSocketTimeout(timeoutsMs.socket)
+                .setConnectionRequestTimeout(Timeout.ofMilliseconds(timeoutsMs.connectionRequest))
+                .setConnectTimeout(Timeout.ofMilliseconds(timeoutsMs.connect))
                 .build();
-    }
-
-
-    public static SocketConfig createDefaultSocketConfig() {
-        return createSocketConfig(DEFAULT_TIMEOUTS_MS);
-    }
-
-    public static SocketConfig createSocketConfig(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
-        return SocketConfig.custom().setSoTimeout(timeoutsMs.socket).build();
-    }
-
-
-    public static ConnectionConfig createDefaultConnectionConfig() {
-        return DEFAULT;
     }
 
     private DigipostHttpClientFactory() {}
