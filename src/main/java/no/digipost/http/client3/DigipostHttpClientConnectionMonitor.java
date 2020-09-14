@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3.eviction;
+package no.digipost.http.client3;
 
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.core5.util.TimeValue;
@@ -21,8 +21,9 @@ import org.apache.hc.core5.util.Timeout;
 
 /**
  * Close expired, and optionally, idle (optional) connections
+ * https://hc.apache.org/httpcomponents-client-ga/tutorial/html/connmgmt.html
  */
-public class DigipostHttpClientConnectionMonitor extends Thread {
+class DigipostHttpClientConnectionMonitor extends Thread {
 
     private final PoolingHttpClientConnectionManager connMgr;
     private volatile boolean shutdown;
@@ -30,11 +31,7 @@ public class DigipostHttpClientConnectionMonitor extends Thread {
     private final Timeout threadTimeout;
     private final TimeValue closeIdleAfter;
 
-    public DigipostHttpClientConnectionMonitor(PoolingHttpClientConnectionManager connMgr) {
-        this(connMgr, DigipostHttpClientConnectionEvictionPolicy.DEFAULT);
-    }
-
-    public DigipostHttpClientConnectionMonitor(PoolingHttpClientConnectionManager connMgr, DigipostHttpClientConnectionEvictionPolicy policy) {
+    DigipostHttpClientConnectionMonitor(PoolingHttpClientConnectionManager connMgr, DigipostHttpClientConnectionEvictionPolicy policy) {
         super();
         this.connMgr = connMgr;
         this.threadTimeout = policy.checkInterval;
@@ -51,7 +48,6 @@ public class DigipostHttpClientConnectionMonitor extends Thread {
                     // Close expired connections
                     connMgr.closeExpired();
                     if (TimeValue.isNonNegative(closeIdleAfter)) {
-                        // close connections that have been idle longer than 30 sec
                         connMgr.closeIdle(closeIdleAfter);
                     }
                 }

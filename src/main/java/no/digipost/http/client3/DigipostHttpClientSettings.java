@@ -15,7 +15,6 @@
  */
 package no.digipost.http.client3;
 
-import no.digipost.http.client3.eviction.DigipostHttpClientConnectionEvictionPolicy;
 import org.apache.hc.core5.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.helpers.NOPLogger;
@@ -35,7 +34,7 @@ public class DigipostHttpClientSettings {
             DigipostHttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
             null,
             DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS,
-            DigipostHttpClientConnectionEvictionPolicy.NONE);
+            DigipostHttpClientConnectionEvictionPolicy.DEFAULT);
 
 
     public DigipostHttpClientSettings logConfigurationTo(Logger logger) {

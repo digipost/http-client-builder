@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3.eviction;
+package no.digipost.http.client3;
 
 import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
@@ -22,11 +22,10 @@ import org.apache.hc.core5.util.Timeout;
 /**
  * Timeout values in milliseconds for the HTTP client.
  */
-public final class DigipostHttpClientConnectionEvictionPolicy {
+final class DigipostHttpClientConnectionEvictionPolicy {
 
     public static DigipostHttpClientConnectionEvictionPolicy NONE = null;
-    public static DigipostHttpClientConnectionEvictionPolicy ONLY_EVICT_EXPIRED_CONNECTIONS = new DigipostHttpClientConnectionEvictionPolicy(TimeValue.NEG_ONE_SECOND);
-    public static DigipostHttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(20);
+    public static DigipostHttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
 
     public final Timeout checkInterval;
 
@@ -37,7 +36,7 @@ public final class DigipostHttpClientConnectionEvictionPolicy {
 
     private DigipostHttpClientConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
-        this.checkInterval = Timeout.ofSeconds(1);
+        this.checkInterval = closeIdleConnectionsAfter.min(TimeValue.ofSeconds(6)).divide(6).toTimeout();
     }
 
     /**
@@ -45,6 +44,7 @@ public final class DigipostHttpClientConnectionEvictionPolicy {
      * @param seconds negative to disable idle connection eviction
      */
     public static DigipostHttpClientConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
+        Validation.equalOrGreater(seconds, -1, "Max idle time before connection is closed.");
         return new DigipostHttpClientConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
     }
 

@@ -15,8 +15,6 @@
  */
 package no.digipost.http.client3;
 
-import no.digipost.http.client3.eviction.DigipostHttpClientConnectionEvictionPolicy;
-import no.digipost.http.client3.eviction.DigipostHttpClientConnectionMonitor;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
