@@ -62,30 +62,31 @@ public class DigipostHttpClientSettings {
         return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
+    public DigipostHttpClientSettings connectionMonitorPolicy(DigipostHttpClientConnectionEvictionPolicy policy) {
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, policy);
+    }
+
 
     @Override
     public String toString() {
         return String.format(
-                      " - max total connections %s\n"
-                    + " - max connections per route %s\n"
-                    + " - so timeout %s ms\n"
-                    + " - socket timeout %s ms\n"
-                    + " - connect timeout %s ms\n"
-                    + " - connection request timeout %s ms\n"
-                    + " - connection eviction policy %s \n"
-                    + " - proxy: %s",
-                    connectionAmount.maxTotal,
-                    connectionAmount.maxPerRoute,
-                    timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
-                    timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
-                    timeoutsMs.connect != 0 ? timeoutsMs.connect : "[infinite]",
-                    timeoutsMs.connectionRequest != 0 ? timeoutsMs.connectionRequest : "[infinite]",
-                    evictionPolicy.toString(),
-                    httpProxy != null ? httpProxy : "no configured proxy host");
+                " - max total connections %s\n"
+                        + " - max connections per route %s\n"
+                        + " - so timeout %s ms\n"
+                        + " - socket timeout %s ms\n"
+                        + " - connect timeout %s ms\n"
+                        + " - connection request timeout %s ms\n"
+                        + " - connection eviction policy %s \n"
+                        + " - proxy: %s",
+                connectionAmount.maxTotal,
+                connectionAmount.maxPerRoute,
+                timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
+                timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
+                timeoutsMs.connect != 0 ? timeoutsMs.connect : "[infinite]",
+                timeoutsMs.connectionRequest != 0 ? timeoutsMs.connectionRequest : "[infinite]",
+                evictionPolicy.toString(),
+                httpProxy != null ? httpProxy : "no configured proxy host");
     }
-
-
-
 
 
     final HttpHost httpProxy;

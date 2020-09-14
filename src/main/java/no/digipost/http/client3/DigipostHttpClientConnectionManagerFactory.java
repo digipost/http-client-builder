@@ -49,21 +49,6 @@ public final class DigipostHttpClientConnectionManagerFactory {
                 .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute);
     }
 
-
-
-
-    public static RequestConfig createDefaultRequestConfig() {
-        return createRequestConfig(DEFAULT_TIMEOUTS_MS);
-    }
-
-    public static RequestConfig createRequestConfig(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
-        return RequestConfig.custom()
-                .setConnectionRequestTimeout(Timeout.ofMilliseconds(timeoutsMs.connectionRequest))
-                .setConnectTimeout(Timeout.ofMilliseconds(timeoutsMs.connect))
-                .build();
-    }
-
-
     public static SocketConfig createDefaultSocketConfig() {
         return createSocketConfig(DEFAULT_TIMEOUTS_MS);
     }

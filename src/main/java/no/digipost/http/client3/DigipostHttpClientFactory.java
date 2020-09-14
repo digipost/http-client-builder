@@ -62,6 +62,10 @@ public final class DigipostHttpClientFactory {
         return createBuilder(DigipostHttpClientSettings.DEFAULT, clientConnectionManager);
     }
 
+    public static HttpClientBuilder createBuilder(DigipostHttpClientSettings settings) {
+        return createBuilder(settings, DigipostHttpClientConnectionManagerFactory.create(settings));
+    }
+
     /**
      * Create an {@link HttpClientBuilder} with given settings.
      *
@@ -77,7 +81,7 @@ public final class DigipostHttpClientFactory {
 
         if (settings.evictionPolicy != DigipostHttpClientConnectionEvictionPolicy.NONE) {
             settings.logger.info("Starting DigipostHttpClientConnectionMonitor-thread");
-            new DigipostHttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy);
+            new DigipostHttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
         }
 
         return HttpClientBuilder.create()
