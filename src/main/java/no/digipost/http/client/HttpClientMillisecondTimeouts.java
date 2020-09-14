@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 /**
  * Timeout values in milliseconds for the HTTP client.
  */
-public final class DigipostHttpClientMillisecondTimeouts {
+public final class HttpClientMillisecondTimeouts {
 
     /**
      * Socket timeout is used for both requests and, if any,
@@ -37,27 +37,27 @@ public final class DigipostHttpClientMillisecondTimeouts {
      */
     public final int connectionRequest;
 
-    DigipostHttpClientMillisecondTimeouts(int socket, int connect, int connectionRequest) {
+    HttpClientMillisecondTimeouts(int socket, int connect, int connectionRequest) {
         this.socket = Validation.equalOrGreater(socket, 0, "socket timeout");
         this.connect = Validation.equalOrGreater(connect, 0, "connect timeout");
         this.connectionRequest = Validation.equalOrGreater(connectionRequest, 0, "connection request timeout");
     }
 
 
-    public DigipostHttpClientMillisecondTimeouts all(int timeoutMs) {
-        return new DigipostHttpClientMillisecondTimeouts(timeoutMs, timeoutMs, timeoutMs);
+    public HttpClientMillisecondTimeouts all(int timeoutMs) {
+        return new HttpClientMillisecondTimeouts(timeoutMs, timeoutMs, timeoutMs);
     }
 
-    public DigipostHttpClientMillisecondTimeouts socket(int timeoutMs) {
-        return new DigipostHttpClientMillisecondTimeouts(timeoutMs, connect, connectionRequest);
+    public HttpClientMillisecondTimeouts socket(int timeoutMs) {
+        return new HttpClientMillisecondTimeouts(timeoutMs, connect, connectionRequest);
     }
 
-    public DigipostHttpClientMillisecondTimeouts connect(int timeoutMs) {
-        return new DigipostHttpClientMillisecondTimeouts(socket, timeoutMs, connectionRequest);
+    public HttpClientMillisecondTimeouts connect(int timeoutMs) {
+        return new HttpClientMillisecondTimeouts(socket, timeoutMs, connectionRequest);
     }
 
-    public DigipostHttpClientMillisecondTimeouts connectionRequest(int timeoutMs) {
-        return new DigipostHttpClientMillisecondTimeouts(socket, connect, timeoutMs);
+    public HttpClientMillisecondTimeouts connectionRequest(int timeoutMs) {
+        return new HttpClientMillisecondTimeouts(socket, connect, timeoutMs);
     }
 
     boolean isPotentiallyDangerous() {

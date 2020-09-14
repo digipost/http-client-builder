@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -21,18 +21,18 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.core5.util.Timeout;
 
-import static no.digipost.http.client3.DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS;
+import static no.digipost.http.client.HttpClientDefaults.DEFAULT_TIMEOUTS_MS;
 
-public final class DigipostHttpClientFactory {
+public final class HttpClientFactory {
 
     /**
      * Creates an {@link CloseableHttpClient HttpClient} with safe and sensible
-     * {@link DigipostHttpClientSettings#DEFAULT defaults}.
+     * {@link HttpClientSettings#DEFAULT defaults}.
      *
      * @return a safe and sensible HttpClient
      */
     public static CloseableHttpClient createDefault() {
-        return create(DigipostHttpClientSettings.DEFAULT);
+        return create(HttpClientSettings.DEFAULT);
     }
 
     /**
@@ -41,27 +41,27 @@ public final class DigipostHttpClientFactory {
      * @param settings configuration parameters
      * @return a new HttpClient
      */
-    public static CloseableHttpClient create(DigipostHttpClientSettings settings) {
-        return createBuilder(settings, DigipostHttpClientConnectionManagerFactory.create(settings)).build();
+    public static CloseableHttpClient create(HttpClientSettings settings) {
+        return createBuilder(settings, HttpClientConnectionManagerFactory.create(settings)).build();
     }
 
     /**
      * Create an {@link HttpClientBuilder} with safe and sensible
-     * {@link DigipostHttpClientSettings#DEFAULT defaults}.
+     * {@link HttpClientSettings#DEFAULT defaults}.
      *
      * @return a safe and sensible HttpClientBuilder
      */
     public static HttpClientBuilder createDefaultBuilder() {
-        return createBuilder(DigipostHttpClientSettings.DEFAULT, DigipostHttpClientConnectionManagerFactory.createDefault());
+        return createBuilder(HttpClientSettings.DEFAULT, HttpClientConnectionManagerFactory.createDefault());
     }
 
 
     public static HttpClientBuilder createBuilder(PoolingHttpClientConnectionManager clientConnectionManager) {
-        return createBuilder(DigipostHttpClientSettings.DEFAULT, clientConnectionManager);
+        return createBuilder(HttpClientSettings.DEFAULT, clientConnectionManager);
     }
 
-    public static HttpClientBuilder createBuilder(DigipostHttpClientSettings settings) {
-        return createBuilder(settings, DigipostHttpClientConnectionManagerFactory.create(settings));
+    public static HttpClientBuilder createBuilder(HttpClientSettings settings) {
+        return createBuilder(settings, HttpClientConnectionManagerFactory.create(settings));
     }
 
     /**
@@ -70,16 +70,16 @@ public final class DigipostHttpClientFactory {
      * @param settings configuration parameters
      * @return a new HttpClientBuilder
      */
-    public static HttpClientBuilder createBuilder(DigipostHttpClientSettings settings, PoolingHttpClientConnectionManager clientConnectionManager) {
+    public static HttpClientBuilder createBuilder(HttpClientSettings settings, PoolingHttpClientConnectionManager clientConnectionManager) {
         if (settings.timeoutsMs.isPotentiallyDangerous()) {
             settings.logger.warn("New http client with potential dangerous settings. These settings should probably not be used in production:\n{}", settings);
         } else {
             settings.logger.info("New http client:\n{}", settings);
         }
 
-        if (settings.evictionPolicy != DigipostHttpClientConnectionEvictionPolicy.NONE) {
-            settings.logger.info("Starting DigipostHttpClientConnectionMonitor-thread");
-            new DigipostHttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
+        if (settings.evictionPolicy != HttpClientConnectionEvictionPolicy.NONE) {
+            settings.logger.info("Starting HttpClientConnectionMonitor-thread");
+            new HttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
         }
 
         return HttpClientBuilder.create()
@@ -93,13 +93,13 @@ public final class DigipostHttpClientFactory {
         return createRequestConfig(DEFAULT_TIMEOUTS_MS);
     }
 
-    public static RequestConfig createRequestConfig(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
+    public static RequestConfig createRequestConfig(HttpClientMillisecondTimeouts timeoutsMs) {
         return RequestConfig.custom()
                 .setConnectionRequestTimeout(Timeout.ofMilliseconds(timeoutsMs.connectionRequest))
                 .setConnectTimeout(Timeout.ofMilliseconds(timeoutsMs.connect))
                 .build();
     }
 
-    private DigipostHttpClientFactory() {}
+    private HttpClientFactory() {}
 
 }

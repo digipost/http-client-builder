@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static no.digipost.http.client3.DigipostHttpClientDefaults.*;
+import static no.digipost.http.client.HttpClientDefaults.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -38,7 +38,7 @@ public class TimeoutsTest {
         assertThat(DEFAULT_TIMEOUTS_MS.connectionRequest(127).connectionRequest, is(127));
         assertThat(DEFAULT_TIMEOUTS_MS.socket(1337).socket, is(1337));
 
-        DigipostHttpClientMillisecondTimeouts allTimeouts50ms = DEFAULT_TIMEOUTS_MS.all(50);
+        HttpClientMillisecondTimeouts allTimeouts50ms = DEFAULT_TIMEOUTS_MS.all(50);
         assertThat(allTimeouts50ms.connect, is(50));
         assertThat(allTimeouts50ms.connectionRequest, is(50));
         assertThat(allTimeouts50ms.socket, is(50));

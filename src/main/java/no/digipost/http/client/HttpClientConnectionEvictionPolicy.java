@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
@@ -22,10 +22,10 @@ import org.apache.hc.core5.util.Timeout;
 /**
  * Timeout values in milliseconds for the HTTP client.
  */
-final class DigipostHttpClientConnectionEvictionPolicy {
+final class HttpClientConnectionEvictionPolicy {
 
-    public static DigipostHttpClientConnectionEvictionPolicy NONE = null;
-    public static DigipostHttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
+    public static HttpClientConnectionEvictionPolicy NONE = null;
+    public static HttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
 
     public final Timeout checkInterval;
 
@@ -34,7 +34,7 @@ final class DigipostHttpClientConnectionEvictionPolicy {
      */
     public final TimeValue connectionsIdleLongerThanThreshold;
 
-    private DigipostHttpClientConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
+    private HttpClientConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
         this.checkInterval = closeIdleConnectionsAfter.min(TimeValue.ofSeconds(6)).divide(6).toTimeout();
     }
@@ -43,14 +43,14 @@ final class DigipostHttpClientConnectionEvictionPolicy {
      *
      * @param seconds negative to disable idle connection eviction
      */
-    public static DigipostHttpClientConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
+    public static HttpClientConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
         Validation.equalOrGreater(seconds, -1, "Max idle time before connection is closed.");
-        return new DigipostHttpClientConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
+        return new HttpClientConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
     }
 
     @Override
     public String toString() {
-        return "DigipostHttpClientConnectionEvictionPolicy{" +
+        return "HttpClientConnectionEvictionPolicy{" +
                 "checkInterval=" + checkInterval +
                 ", connectionsIdleLongerThanThreshold=" + connectionsIdleLongerThanThreshold +
                 '}';

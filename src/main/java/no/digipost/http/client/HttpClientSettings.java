@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 import org.apache.hc.core5.http.HttpHost;
 import org.slf4j.Logger;
@@ -25,27 +25,27 @@ import java.net.URISyntaxException;
  * A subset of configuration parameters for new {@link org.apache.hc.client5.http.impl.classic.CloseableHttpClient http clients}.
  *
  * For complete configuration facilities, use the builder acquired from
- * {@link DigipostHttpClientFactory#createDefaultBuilder()}.
+ * {@link HttpClientFactory#createDefaultBuilder()}.
  */
-public class DigipostHttpClientSettings {
+public class HttpClientSettings {
 
-    public static final DigipostHttpClientSettings DEFAULT = new DigipostHttpClientSettings(
+    public static final HttpClientSettings DEFAULT = new HttpClientSettings(
             NOPLogger.NOP_LOGGER,
-            DigipostHttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
+            HttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
             null,
-            DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS,
-            DigipostHttpClientConnectionEvictionPolicy.DEFAULT);
+            HttpClientDefaults.DEFAULT_TIMEOUTS_MS,
+            HttpClientConnectionEvictionPolicy.DEFAULT);
 
 
-    public DigipostHttpClientSettings logConfigurationTo(Logger logger) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
+    public HttpClientSettings logConfigurationTo(Logger logger) {
+        return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
-    public DigipostHttpClientSettings connections(DigipostHttpClientConnectionAmount connectionAmount) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
+    public HttpClientSettings connections(HttpClientConnectionAmount connectionAmount) {
+        return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
-    public DigipostHttpClientSettings useProxy(String proxyHostUrl) {
+    public HttpClientSettings useProxy(String proxyHostUrl) {
         try {
             return useProxy(HttpHost.create(proxyHostUrl));
         } catch (URISyntaxException e) {
@@ -53,16 +53,16 @@ public class DigipostHttpClientSettings {
         }
     }
 
-    public DigipostHttpClientSettings useProxy(HttpHost httpProxy) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
+    public HttpClientSettings useProxy(HttpHost httpProxy) {
+        return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
-    public DigipostHttpClientSettings timeouts(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
+    public HttpClientSettings timeouts(HttpClientMillisecondTimeouts timeoutsMs) {
+        return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
-    public DigipostHttpClientSettings connectionMonitorPolicy(DigipostHttpClientConnectionEvictionPolicy policy) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, policy);
+    public HttpClientSettings connectionMonitorPolicy(HttpClientConnectionEvictionPolicy policy) {
+        return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, policy);
     }
 
 
@@ -90,16 +90,16 @@ public class DigipostHttpClientSettings {
 
     final HttpHost httpProxy;
     final Logger logger;
-    final DigipostHttpClientConnectionAmount connectionAmount;
-    final DigipostHttpClientMillisecondTimeouts timeoutsMs;
-    final DigipostHttpClientConnectionEvictionPolicy evictionPolicy;
+    final HttpClientConnectionAmount connectionAmount;
+    final HttpClientMillisecondTimeouts timeoutsMs;
+    final HttpClientConnectionEvictionPolicy evictionPolicy;
 
-    private DigipostHttpClientSettings(
+    private HttpClientSettings(
             Logger instantiationLogger,
-            DigipostHttpClientConnectionAmount connectionAmount,
+            HttpClientConnectionAmount connectionAmount,
             HttpHost proxy,
-            DigipostHttpClientMillisecondTimeouts timeoutsMs,
-            DigipostHttpClientConnectionEvictionPolicy evictionPolicy) {
+            HttpClientMillisecondTimeouts timeoutsMs,
+            HttpClientConnectionEvictionPolicy evictionPolicy) {
 
         this.logger = instantiationLogger;
         this.connectionAmount = connectionAmount;

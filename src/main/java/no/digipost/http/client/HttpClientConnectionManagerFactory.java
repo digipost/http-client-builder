@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
-import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.core5.http.io.SocketConfig;
 import org.apache.hc.core5.util.Timeout;
 
-import static no.digipost.http.client3.DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS;
+import static no.digipost.http.client.HttpClientDefaults.DEFAULT_TIMEOUTS_MS;
 
-public final class DigipostHttpClientConnectionManagerFactory {
+public final class HttpClientConnectionManagerFactory {
 
     public static PoolingHttpClientConnectionManager createDefault() {
-        return create(DigipostHttpClientSettings.DEFAULT);
+        return create(HttpClientSettings.DEFAULT);
     }
 
     public static PoolingHttpClientConnectionManagerBuilder createDefaultBuilder() {
-        return createBuilder(DigipostHttpClientSettings.DEFAULT);
+        return createBuilder(HttpClientSettings.DEFAULT);
     }
 
 
-    public static PoolingHttpClientConnectionManager create(DigipostHttpClientSettings settings) {
+    public static PoolingHttpClientConnectionManager create(HttpClientSettings settings) {
         return PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultSocketConfig(createSocketConfig(settings.timeoutsMs))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
@@ -42,7 +41,7 @@ public final class DigipostHttpClientConnectionManagerFactory {
                 .build();
     }
 
-    public static PoolingHttpClientConnectionManagerBuilder createBuilder(DigipostHttpClientSettings settings) {
+    public static PoolingHttpClientConnectionManagerBuilder createBuilder(HttpClientSettings settings) {
         return PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultSocketConfig(createSocketConfig(settings.timeoutsMs))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
@@ -53,10 +52,10 @@ public final class DigipostHttpClientConnectionManagerFactory {
         return createSocketConfig(DEFAULT_TIMEOUTS_MS);
     }
 
-    public static SocketConfig createSocketConfig(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
+    public static SocketConfig createSocketConfig(HttpClientMillisecondTimeouts timeoutsMs) {
         return SocketConfig.custom().setSoTimeout(Timeout.ofMilliseconds(timeoutsMs.socket)).build();
     }
 
-    private DigipostHttpClientConnectionManagerFactory() {}
+    private HttpClientConnectionManagerFactory() {}
 
 }

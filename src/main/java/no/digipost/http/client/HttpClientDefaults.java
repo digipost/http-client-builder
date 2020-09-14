@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 
-public final class DigipostHttpClientDefaults {
+public final class HttpClientDefaults {
 
     /**
      * Socket timeout: {@value #SOCKET_TIMEOUT_MS} ms.
@@ -42,7 +42,7 @@ public final class DigipostHttpClientDefaults {
      *   <li>{@link #CONNECTION_REQUEST_TIMEOUT_MS}: {@value #CONNECTION_REQUEST_TIMEOUT_MS} ms</li>
      * </ul>
      */
-    public static final DigipostHttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new DigipostHttpClientMillisecondTimeouts(SOCKET_TIMEOUT_MS, CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
+    public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(SOCKET_TIMEOUT_MS, CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
 
 
 
@@ -98,10 +98,10 @@ public final class DigipostHttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_HIGH = MAX_CONNECTIONS_PER_ROUTE_HIGH;
 
 
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_NORMAL = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_MEDIUM = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_NORMAL = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_MEDIUM = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
 
-    private DigipostHttpClientDefaults() {}
+    private HttpClientDefaults() {}
 }
