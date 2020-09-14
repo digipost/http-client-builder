@@ -24,6 +24,24 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class TimeoutsTest {
+//
+//    public void test(){
+//
+//        var conman = DigipostHttpClientConnectionManagerFactory.createDefaultBuilder();
+//        var conman2 = DigipostHttpClientConnectionManagerFactory.create(settings);
+//        DigipostHttpClientFactory.with(connectionManager).create(settings);
+//
+//        DigipostHttpClientFactory.with(connectionManager).createDefault();
+//        DigipostHttpClientFactory.create(settings); //
+//        DigipostHttpClientFactory.createDefault();
+//
+//        DigipostHttpClientFactory.create(settings);
+//        DigipostHttpClientFactory.createDefault();
+//
+//        new DigipostHttpClientConnectionMonitor(conman);
+//        DigipostHttpClientConnectionEvictionPolicy policy = new DigipostHttpClientConnectionEvictionPolicy();
+//        new DigipostHttpClientConnectionMonitor(conman, policy);
+//    }
 
     @Test
     public void defaultValuesAreGreaterThanZero() {

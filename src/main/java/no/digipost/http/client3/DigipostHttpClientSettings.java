@@ -15,6 +15,7 @@
  */
 package no.digipost.http.client3;
 
+import no.digipost.http.client3.eviction.DigipostHttpClientConnectionEvictionPolicy;
 import org.apache.hc.core5.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.helpers.NOPLogger;
@@ -33,15 +34,16 @@ public class DigipostHttpClientSettings {
             NOPLogger.NOP_LOGGER,
             DigipostHttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
             null,
-            DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS);
+            DigipostHttpClientDefaults.DEFAULT_TIMEOUTS_MS,
+            DigipostHttpClientConnectionEvictionPolicy.NONE);
 
 
     public DigipostHttpClientSettings logConfigurationTo(Logger logger) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
     public DigipostHttpClientSettings connections(DigipostHttpClientConnectionAmount connectionAmount) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
     public DigipostHttpClientSettings useProxy(String proxyHostUrl) {
@@ -53,11 +55,11 @@ public class DigipostHttpClientSettings {
     }
 
     public DigipostHttpClientSettings useProxy(HttpHost httpProxy) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
     public DigipostHttpClientSettings timeouts(DigipostHttpClientMillisecondTimeouts timeoutsMs) {
-        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs);
+        return new DigipostHttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
 
@@ -70,6 +72,7 @@ public class DigipostHttpClientSettings {
                     + " - socket timeout %s ms\n"
                     + " - connect timeout %s ms\n"
                     + " - connection request timeout %s ms\n"
+                    + " - connection eviction policy %s \n"
                     + " - proxy: %s",
                     connectionAmount.maxTotal,
                     connectionAmount.maxPerRoute,
@@ -77,6 +80,7 @@ public class DigipostHttpClientSettings {
                     timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
                     timeoutsMs.connect != 0 ? timeoutsMs.connect : "[infinite]",
                     timeoutsMs.connectionRequest != 0 ? timeoutsMs.connectionRequest : "[infinite]",
+                    evictionPolicy.toString(),
                     httpProxy != null ? httpProxy : "no configured proxy host");
     }
 
@@ -88,17 +92,20 @@ public class DigipostHttpClientSettings {
     final Logger logger;
     final DigipostHttpClientConnectionAmount connectionAmount;
     final DigipostHttpClientMillisecondTimeouts timeoutsMs;
+    final DigipostHttpClientConnectionEvictionPolicy evictionPolicy;
 
     private DigipostHttpClientSettings(
             Logger instantiationLogger,
             DigipostHttpClientConnectionAmount connectionAmount,
             HttpHost proxy,
-            DigipostHttpClientMillisecondTimeouts timeoutsMs) {
+            DigipostHttpClientMillisecondTimeouts timeoutsMs,
+            DigipostHttpClientConnectionEvictionPolicy evictionPolicy) {
 
         this.logger = instantiationLogger;
         this.connectionAmount = connectionAmount;
         this.httpProxy = proxy;
         this.timeoutsMs = timeoutsMs;
+        this.evictionPolicy = evictionPolicy;
     }
 
 }

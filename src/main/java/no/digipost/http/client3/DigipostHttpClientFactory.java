@@ -15,6 +15,8 @@
  */
 package no.digipost.http.client3;
 
+import no.digipost.http.client3.eviction.DigipostHttpClientConnectionEvictionPolicy;
+import no.digipost.http.client3.eviction.DigipostHttpClientConnectionMonitor;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -56,6 +58,10 @@ public final class DigipostHttpClientFactory {
     }
 
 
+    public static HttpClientBuilder createBuilder(PoolingHttpClientConnectionManager clientConnectionManager) {
+        return createBuilder(DigipostHttpClientSettings.DEFAULT, clientConnectionManager);
+    }
+
     /**
      * Create an {@link HttpClientBuilder} with given settings.
      *
@@ -67,6 +73,11 @@ public final class DigipostHttpClientFactory {
             settings.logger.warn("New http client with potential dangerous settings. These settings should probably not be used in production:\n{}", settings);
         } else {
             settings.logger.info("New http client:\n{}", settings);
+        }
+
+        if (settings.evictionPolicy != DigipostHttpClientConnectionEvictionPolicy.NONE) {
+            settings.logger.info("Starting DigipostHttpClientConnectionMonitor-thread");
+            new DigipostHttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy);
         }
 
         return HttpClientBuilder.create()
