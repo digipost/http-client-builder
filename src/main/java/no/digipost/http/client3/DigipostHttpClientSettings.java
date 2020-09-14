@@ -84,7 +84,7 @@ public class DigipostHttpClientSettings {
                 timeoutsMs.socket != 0 ? timeoutsMs.socket : "[infinite]",
                 timeoutsMs.connect != 0 ? timeoutsMs.connect : "[infinite]",
                 timeoutsMs.connectionRequest != 0 ? timeoutsMs.connectionRequest : "[infinite]",
-                evictionPolicy.toString(),
+                evictionPolicy != null? evictionPolicy.toString() : "[none]",
                 httpProxy != null ? httpProxy : "no configured proxy host");
     }
 

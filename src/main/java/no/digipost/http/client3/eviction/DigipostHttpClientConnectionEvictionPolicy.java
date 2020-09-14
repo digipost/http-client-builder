@@ -26,30 +26,33 @@ public final class DigipostHttpClientConnectionEvictionPolicy {
 
     public static DigipostHttpClientConnectionEvictionPolicy NONE = null;
     public static DigipostHttpClientConnectionEvictionPolicy ONLY_EVICT_EXPIRED_CONNECTIONS = new DigipostHttpClientConnectionEvictionPolicy(TimeValue.NEG_ONE_SECOND);
-    public static DigipostHttpClientConnectionEvictionPolicy DEFAULT = idleConnectionTimeout(20);
+    public static DigipostHttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(20);
 
     public final Timeout checkInterval;
 
     /**
      * The idle timeout before evicting the connection.
      */
-    public final TimeValue closeIdleConnectionsAfter;
+    public final TimeValue connectionsIdleLongerThanThreshold;
 
     private DigipostHttpClientConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
-        this.closeIdleConnectionsAfter = closeIdleConnectionsAfter;
+        this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
         this.checkInterval = Timeout.ofSeconds(1);
     }
 
     /**
      *
-     * @param timeoutMs 0 to disable idle connection eviction
+     * @param seconds negative to disable idle connection eviction
      */
-    public static DigipostHttpClientConnectionEvictionPolicy idleConnectionTimeout(int timeoutMs) {
-        return new DigipostHttpClientConnectionEvictionPolicy(TimeValue.ofMilliseconds(timeoutMs));
+    public static DigipostHttpClientConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
+        return new DigipostHttpClientConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
     }
 
     @Override
     public String toString() {
-        return "idleConnection=" + closeIdleConnectionsAfter;
+        return "DigipostHttpClientConnectionEvictionPolicy{" +
+                "checkInterval=" + checkInterval +
+                ", connectionsIdleLongerThanThreshold=" + connectionsIdleLongerThanThreshold +
+                '}';
     }
 }

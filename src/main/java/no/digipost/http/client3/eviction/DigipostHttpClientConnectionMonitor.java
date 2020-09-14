@@ -38,7 +38,7 @@ public class DigipostHttpClientConnectionMonitor extends Thread {
         super();
         this.connMgr = connMgr;
         this.threadTimeout = policy.checkInterval;
-        this.closeIdleAfter = policy.closeIdleConnectionsAfter;
+        this.closeIdleAfter = policy.connectionsIdleLongerThanThreshold;
     }
 
     @Override
