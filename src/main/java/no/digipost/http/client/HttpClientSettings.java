@@ -34,7 +34,7 @@ public class HttpClientSettings {
             HttpClientDefaults.CONNECTION_AMOUNT_NORMAL,
             null,
             HttpClientDefaults.DEFAULT_TIMEOUTS_MS,
-            HttpClientConnectionEvictionPolicy.DEFAULT);
+            ConnectionEvictionPolicy.DEFAULT);
 
 
     public HttpClientSettings logConfigurationTo(Logger logger) {
@@ -61,7 +61,7 @@ public class HttpClientSettings {
         return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, evictionPolicy);
     }
 
-    public HttpClientSettings connectionMonitorPolicy(HttpClientConnectionEvictionPolicy policy) {
+    public HttpClientSettings connectionEvictionPolicy(ConnectionEvictionPolicy policy) {
         return new HttpClientSettings(logger, connectionAmount, httpProxy, timeoutsMs, policy);
     }
 
@@ -92,14 +92,14 @@ public class HttpClientSettings {
     final Logger logger;
     final HttpClientConnectionAmount connectionAmount;
     final HttpClientMillisecondTimeouts timeoutsMs;
-    final HttpClientConnectionEvictionPolicy evictionPolicy;
+    final ConnectionEvictionPolicy evictionPolicy;
 
     private HttpClientSettings(
             Logger instantiationLogger,
             HttpClientConnectionAmount connectionAmount,
             HttpHost proxy,
             HttpClientMillisecondTimeouts timeoutsMs,
-            HttpClientConnectionEvictionPolicy evictionPolicy) {
+            ConnectionEvictionPolicy evictionPolicy) {
 
         this.logger = instantiationLogger;
         this.connectionAmount = connectionAmount;

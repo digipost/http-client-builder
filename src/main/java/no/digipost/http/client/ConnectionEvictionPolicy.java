@@ -22,10 +22,10 @@ import org.apache.hc.core5.util.Timeout;
 /**
  * Timeout values in milliseconds for the HTTP client.
  */
-final class HttpClientConnectionEvictionPolicy {
+final class ConnectionEvictionPolicy {
 
-    public static HttpClientConnectionEvictionPolicy NONE = null;
-    public static HttpClientConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
+    public static ConnectionEvictionPolicy NONE = null;
+    public static ConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
 
     public final Timeout checkInterval;
 
@@ -34,7 +34,7 @@ final class HttpClientConnectionEvictionPolicy {
      */
     public final TimeValue connectionsIdleLongerThanThreshold;
 
-    private HttpClientConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
+    private ConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
         this.checkInterval = closeIdleConnectionsAfter.min(TimeValue.ofSeconds(6)).divide(6).toTimeout();
     }
@@ -43,14 +43,14 @@ final class HttpClientConnectionEvictionPolicy {
      *
      * @param seconds negative to disable idle connection eviction
      */
-    public static HttpClientConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
+    public static ConnectionEvictionPolicy closeConnectionsIdleLongerThan(int seconds) {
         Validation.equalOrGreater(seconds, -1, "Max idle time before connection is closed.");
-        return new HttpClientConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
+        return new ConnectionEvictionPolicy(TimeValue.ofSeconds(seconds));
     }
 
     @Override
     public String toString() {
-        return "HttpClientConnectionEvictionPolicy{" +
+        return "ConnectionEvictionPolicy{" +
                 "checkInterval=" + checkInterval +
                 ", connectionsIdleLongerThanThreshold=" + connectionsIdleLongerThanThreshold +
                 '}';

@@ -23,7 +23,7 @@ import org.apache.hc.core5.util.Timeout;
  * Close expired, and optionally, idle (optional) connections
  * https://hc.apache.org/httpcomponents-client-ga/tutorial/html/connmgmt.html
  */
-class HttpClientConnectionMonitor extends Thread {
+class ConnectionMonitor extends Thread {
 
     private final PoolingHttpClientConnectionManager connMgr;
     private volatile boolean shutdown;
@@ -31,7 +31,7 @@ class HttpClientConnectionMonitor extends Thread {
     private final Timeout threadTimeout;
     private final TimeValue closeIdleAfter;
 
-    HttpClientConnectionMonitor(PoolingHttpClientConnectionManager connMgr, HttpClientConnectionEvictionPolicy policy) {
+    ConnectionMonitor(PoolingHttpClientConnectionManager connMgr, ConnectionEvictionPolicy policy) {
         super();
         this.connMgr = connMgr;
         this.threadTimeout = policy.checkInterval;

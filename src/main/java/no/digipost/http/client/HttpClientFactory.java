@@ -77,9 +77,9 @@ public final class HttpClientFactory {
             settings.logger.info("New http client:\n{}", settings);
         }
 
-        if (settings.evictionPolicy != HttpClientConnectionEvictionPolicy.NONE) {
-            settings.logger.info("Starting HttpClientConnectionMonitor-thread");
-            new HttpClientConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
+        if (settings.evictionPolicy != ConnectionEvictionPolicy.NONE) {
+            settings.logger.info("Starting ConnectionMonitor-thread");
+            new ConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
         }
 
         return HttpClientBuilder.create()
