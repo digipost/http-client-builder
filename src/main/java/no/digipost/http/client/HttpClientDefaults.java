@@ -1,12 +1,12 @@
 /**
  * Copyright (C) Posten Norge AS
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,7 +45,6 @@ public final class HttpClientDefaults {
     public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
 
 
-
     /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_NORMAL}</strong> connections
      * <em>per route</em> for normal amount of traffic.
@@ -80,7 +79,6 @@ public final class HttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_MEDIUM = MAX_CONNECTIONS_PER_ROUTE_MEDIUM;
 
 
-
     /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_HIGH}</strong> connections
      * <em>per route</em> for high amount of traffic.
@@ -103,5 +101,6 @@ public final class HttpClientDefaults {
     public static final HttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
 
-    private HttpClientDefaults() {}
+    private HttpClientDefaults() {
+    }
 }

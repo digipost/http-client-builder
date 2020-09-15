@@ -1,12 +1,12 @@
 /**
  * Copyright (C) Posten Norge AS
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,6 @@
 package no.digipost.http.client;
 
 import org.junit.jupiter.api.Test;
-
 
 import static no.digipost.http.client.HttpClientDefaults.CONNECTION_REQUEST_TIMEOUT_MS;
 import static no.digipost.http.client.HttpClientDefaults.CONNECT_TIMEOUT_MS;
