@@ -20,19 +20,19 @@ import org.apache.hc.core5.util.Timeout;
 
 
 /**
- * Timeout values in milliseconds for the HTTP client.
+ * Eviction policy for the connections.
  */
-final class ConnectionEvictionPolicy {
+public final class ConnectionEvictionPolicy {
 
     public static ConnectionEvictionPolicy NONE = null;
     public static ConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
 
-    public final Timeout checkInterval;
+    final Timeout checkInterval;
 
     /**
      * The idle timeout before evicting the connection.
      */
-    public final TimeValue connectionsIdleLongerThanThreshold;
+    final TimeValue connectionsIdleLongerThanThreshold;
 
     private ConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
