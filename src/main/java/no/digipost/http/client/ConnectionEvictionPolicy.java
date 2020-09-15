@@ -36,7 +36,7 @@ final class ConnectionEvictionPolicy {
 
     private ConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
-        this.checkInterval = closeIdleConnectionsAfter.min(TimeValue.ofSeconds(6)).divide(6).toTimeout();
+        this.checkInterval = closeIdleConnectionsAfter.compareTo(TimeValue.ofSeconds(6)) > 0 ? closeIdleConnectionsAfter.divide(6).toTimeout() : closeIdleConnectionsAfter.min(TimeValue.ofSeconds(1)).toTimeout();
     }
 
     /**
