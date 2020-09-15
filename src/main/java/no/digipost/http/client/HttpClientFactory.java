@@ -36,6 +36,16 @@ public final class HttpClientFactory {
     }
 
     /**
+     * Creates an {@link CloseableHttpClient HttpClient} with safe and sensible
+     * {@link HttpClientSettings#DEFAULT defaults}.
+     *
+     * @return a safe and sensible HttpClient
+     */
+    public static CloseableHttpClient createDefault(PoolingHttpClientConnectionManager clientConnectionManager) {
+        return create(HttpClientSettings.DEFAULT, clientConnectionManager);
+    }
+
+    /**
      * Creates an {@link CloseableHttpClient HttpClient} with given settings.
      *
      * @param settings configuration parameters
@@ -43,6 +53,17 @@ public final class HttpClientFactory {
      */
     public static CloseableHttpClient create(HttpClientSettings settings) {
         return createBuilder(settings, HttpClientConnectionManagerFactory.create(settings)).build();
+    }
+
+    /**
+     * Creates an {@link CloseableHttpClient HttpClient} with given settings and connection manager.
+     *
+     * @param settings configuration parameters
+     * @param clientConnectionManager the client connection manager
+     * @return a new HttpClient
+     */
+    public static CloseableHttpClient create(HttpClientSettings settings, PoolingHttpClientConnectionManager clientConnectionManager) {
+        return createBuilder(settings, clientConnectionManager).build();
     }
 
     /**
@@ -56,18 +77,31 @@ public final class HttpClientFactory {
     }
 
 
+    /**
+     * Create an {@link HttpClientBuilder} with given connection manager.
+     *
+     * @param clientConnectionManager the client connection manager
+     * @return a new HttpClientBuilder
+     */
     public static HttpClientBuilder createBuilder(PoolingHttpClientConnectionManager clientConnectionManager) {
         return createBuilder(HttpClientSettings.DEFAULT, clientConnectionManager);
-    }
-
-    public static HttpClientBuilder createBuilder(HttpClientSettings settings) {
-        return createBuilder(settings, HttpClientConnectionManagerFactory.create(settings));
     }
 
     /**
      * Create an {@link HttpClientBuilder} with given settings.
      *
      * @param settings configuration parameters
+     * @return a new HttpClientBuilder
+     */
+    public static HttpClientBuilder createBuilder(HttpClientSettings settings) {
+        return createBuilder(settings, HttpClientConnectionManagerFactory.create(settings));
+    }
+
+    /**
+     * Create an {@link HttpClientBuilder} with given settings and connection manager.
+     *
+     * @param settings configuration parameters
+     * @param clientConnectionManager the client connection manager
      * @return a new HttpClientBuilder
      */
     public static HttpClientBuilder createBuilder(HttpClientSettings settings, PoolingHttpClientConnectionManager clientConnectionManager) {
