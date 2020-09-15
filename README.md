@@ -1,6 +1,6 @@
 # Digipost HTTP Client Builder
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.digipost/http-client-builder/badge.svg)](https://maven-badges.herokuapp.com/maven-central/no.digipost/http-client-builder)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.digipost/http-client-builder/badge.svg)](https://maven-badges.herokuapp.com/maven-central/no.digipost/http-client-builder5)
 ![](https://github.com/digipost/http-client-builder/workflows/Build%20snapshot/badge.svg)
 [![License](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/digipost/http-client-builder/blob/master/LICENSE)
 
