@@ -15,6 +15,7 @@ This software includes third party software subject to the following licenses:
   Digipost HTTP Client Builder under The Apache Software License, Version 2.0
   Java Hamcrest under BSD Licence 3
   JCL 1.2 implemented over SLF4J under MIT License
-  JUnit under Eclipse Public License 1.0
+  JUnit Jupiter API under Eclipse Public License v2.0
+  JUnit Platform Commons under Eclipse Public License v2.0
   SLF4J API Module under MIT License
 

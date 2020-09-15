@@ -15,13 +15,19 @@
  */
 package no.digipost.http.client;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-import static no.digipost.http.client.HttpClientDefaults.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+
+import static no.digipost.http.client.HttpClientDefaults.CONNECTION_REQUEST_TIMEOUT_MS;
+import static no.digipost.http.client.HttpClientDefaults.CONNECT_TIMEOUT_MS;
+import static no.digipost.http.client.HttpClientDefaults.DEFAULT_TIMEOUTS_MS;
+import static no.digipost.http.client.HttpClientDefaults.SOCKET_TIMEOUT_MS;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class TimeoutsTest {
 
@@ -44,24 +50,18 @@ public class TimeoutsTest {
         assertThat(allTimeouts50ms.socket, is(50));
     }
 
-    @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
-
     @Test
     public void negativeConnectTimeoutIsNotAllowed() {
-        expectedException.expect(IllegalArgumentException.class);
-        DEFAULT_TIMEOUTS_MS.connect(-1);
+        assertThrows(IllegalArgumentException.class, () -> DEFAULT_TIMEOUTS_MS.connect(-1));
     }
 
     @Test
     public void negativeConnecttionRequestTimeoutIsNotAllowed() {
-        expectedException.expect(IllegalArgumentException.class);
-        DEFAULT_TIMEOUTS_MS.connectionRequest(-1);
+        assertThrows(IllegalArgumentException.class, () -> DEFAULT_TIMEOUTS_MS.connectionRequest(-1));
     }
 
     @Test
     public void negativeSocketTimeoutIsNotAllowed() {
-        expectedException.expect(IllegalArgumentException.class);
-        DEFAULT_TIMEOUTS_MS.socket(-1);
+        assertThrows(IllegalArgumentException.class, () -> DEFAULT_TIMEOUTS_MS.socket(-1));
     }
 }
