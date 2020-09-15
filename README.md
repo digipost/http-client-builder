@@ -28,7 +28,7 @@ PoolingHttpClientConnectionManager connectionManager = HttpClientConnectionManag
         )
         .build();
 
-CloseableHttpClient client = HttpClientFactory.createDefault(connectionManager);
+CloseableHttpClient client = HttpClientFactory.create(connectionManager);
 ```
 
 ### Disable connection monitor

@@ -18,14 +18,7 @@ package no.digipost.http.client;
 /**
  * Timeout values in milliseconds for the HTTP client.
  */
-public final class HttpClientMillisecondTimeouts {
-
-    /**
-     * Socket timeout is used for both requests and, if any,
-     * underlying layered sockets (typically for
-     * secure sockets).
-     */
-    public final int socket;
+public final class HttpClientMillisecondTimeouts implements PotentiallyDangerous{
 
     /**
      * The connect timeout for requests.
@@ -37,31 +30,27 @@ public final class HttpClientMillisecondTimeouts {
      */
     public final int connectionRequest;
 
-    HttpClientMillisecondTimeouts(int socket, int connect, int connectionRequest) {
-        this.socket = Validation.equalOrGreater(socket, 0, "socket timeout");
+    HttpClientMillisecondTimeouts(int connect, int connectionRequest) {
         this.connect = Validation.equalOrGreater(connect, 0, "connect timeout");
         this.connectionRequest = Validation.equalOrGreater(connectionRequest, 0, "connection request timeout");
     }
 
 
     public HttpClientMillisecondTimeouts all(int timeoutMs) {
-        return new HttpClientMillisecondTimeouts(timeoutMs, timeoutMs, timeoutMs);
-    }
-
-    public HttpClientMillisecondTimeouts socket(int timeoutMs) {
-        return new HttpClientMillisecondTimeouts(timeoutMs, connect, connectionRequest);
+        return new HttpClientMillisecondTimeouts(timeoutMs, timeoutMs);
     }
 
     public HttpClientMillisecondTimeouts connect(int timeoutMs) {
-        return new HttpClientMillisecondTimeouts(socket, timeoutMs, connectionRequest);
+        return new HttpClientMillisecondTimeouts(timeoutMs, connectionRequest);
     }
 
     public HttpClientMillisecondTimeouts connectionRequest(int timeoutMs) {
-        return new HttpClientMillisecondTimeouts(socket, connect, timeoutMs);
+        return new HttpClientMillisecondTimeouts(connect, timeoutMs);
     }
 
-    boolean isPotentiallyDangerous() {
-        return socket == 0 || connect == 0 || connectionRequest == 0;
+    @Override
+    public boolean isPotentiallyDangerous() {
+        return connect == 0 || connectionRequest == 0;
     }
 
 }

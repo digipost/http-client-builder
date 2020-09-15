@@ -21,39 +21,46 @@ import org.apache.hc.core5.http.io.SocketConfig;
 import org.apache.hc.core5.util.Timeout;
 
 import static no.digipost.http.client.HttpClientDefaults.DEFAULT_TIMEOUTS_MS;
+import static no.digipost.http.client.HttpClientDefaults.SOCKET_TIMEOUT_MS;
 
 public final class HttpClientConnectionManagerFactory {
 
     public static PoolingHttpClientConnectionManager createDefault() {
-        return create(HttpClientSettings.DEFAULT);
+        return create(HttpClientConnectionSettings.DEFAULT);
     }
 
     public static PoolingHttpClientConnectionManagerBuilder createDefaultBuilder() {
-        return createBuilder(HttpClientSettings.DEFAULT);
+        return createBuilder(HttpClientConnectionSettings.DEFAULT);
     }
 
 
-    public static PoolingHttpClientConnectionManager create(HttpClientSettings settings) {
+    public static PoolingHttpClientConnectionManager create(HttpClientConnectionSettings settings) {
         return PoolingHttpClientConnectionManagerBuilder.create()
-                .setDefaultSocketConfig(createSocketConfig(settings.timeoutsMs))
+                .setDefaultSocketConfig(createSocketConfig(settings.socketTimeoutMs))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
                 .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute)
                 .build();
     }
 
-    public static PoolingHttpClientConnectionManagerBuilder createBuilder(HttpClientSettings settings) {
+    public static PoolingHttpClientConnectionManagerBuilder createBuilder(HttpClientConnectionSettings settings) {
+        if (settings.isPotentiallyDangerous()) {
+            settings.logger.warn("New http client connection manager with potential dangerous settings. These settings should probably not be used in production:\n{}", settings);
+        } else {
+            settings.logger.info("New http client connection manager:\n{}", settings);
+        }
+
         return PoolingHttpClientConnectionManagerBuilder.create()
-                .setDefaultSocketConfig(createSocketConfig(settings.timeoutsMs))
+                .setDefaultSocketConfig(createSocketConfig(settings.socketTimeoutMs))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
                 .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute);
     }
 
     public static SocketConfig createDefaultSocketConfig() {
-        return createSocketConfig(DEFAULT_TIMEOUTS_MS);
+        return createSocketConfig(SOCKET_TIMEOUT_MS);
     }
 
-    public static SocketConfig createSocketConfig(HttpClientMillisecondTimeouts timeoutsMs) {
-        return SocketConfig.custom().setSoTimeout(Timeout.ofMilliseconds(timeoutsMs.socket)).build();
+    public static SocketConfig createSocketConfig(int timeoutsMs) {
+        return SocketConfig.custom().setSoTimeout(Timeout.ofMilliseconds(timeoutsMs)).build();
     }
 
     private HttpClientConnectionManagerFactory() {}

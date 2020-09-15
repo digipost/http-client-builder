@@ -42,7 +42,7 @@ public final class HttpClientDefaults {
      *   <li>{@link #CONNECTION_REQUEST_TIMEOUT_MS}: {@value #CONNECTION_REQUEST_TIMEOUT_MS} ms</li>
      * </ul>
      */
-    public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(SOCKET_TIMEOUT_MS, CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
+    public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
 
 
 

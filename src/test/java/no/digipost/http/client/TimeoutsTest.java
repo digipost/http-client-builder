@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import static no.digipost.http.client.HttpClientDefaults.CONNECTION_REQUEST_TIMEOUT_MS;
 import static no.digipost.http.client.HttpClientDefaults.CONNECT_TIMEOUT_MS;
 import static no.digipost.http.client.HttpClientDefaults.DEFAULT_TIMEOUTS_MS;
-import static no.digipost.http.client.HttpClientDefaults.SOCKET_TIMEOUT_MS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.greaterThan;
@@ -34,7 +33,6 @@ public class TimeoutsTest {
     @Test
     public void defaultValuesAreGreaterThanZero() {
         assertThat(DEFAULT_TIMEOUTS_MS.connect, both(is(CONNECT_TIMEOUT_MS)).and(greaterThan(0)));
-        assertThat(DEFAULT_TIMEOUTS_MS.socket, both(is(SOCKET_TIMEOUT_MS)).and(greaterThan(0)));
         assertThat(DEFAULT_TIMEOUTS_MS.connectionRequest, both(is(CONNECTION_REQUEST_TIMEOUT_MS)).and(greaterThan(0)));
     }
 
@@ -42,12 +40,10 @@ public class TimeoutsTest {
     public void settingTimeoutValues() {
         assertThat(DEFAULT_TIMEOUTS_MS.connect(42).connect, is(42));
         assertThat(DEFAULT_TIMEOUTS_MS.connectionRequest(127).connectionRequest, is(127));
-        assertThat(DEFAULT_TIMEOUTS_MS.socket(1337).socket, is(1337));
 
         HttpClientMillisecondTimeouts allTimeouts50ms = DEFAULT_TIMEOUTS_MS.all(50);
         assertThat(allTimeouts50ms.connect, is(50));
         assertThat(allTimeouts50ms.connectionRequest, is(50));
-        assertThat(allTimeouts50ms.socket, is(50));
     }
 
     @Test
@@ -58,10 +54,5 @@ public class TimeoutsTest {
     @Test
     public void negativeConnecttionRequestTimeoutIsNotAllowed() {
         assertThrows(IllegalArgumentException.class, () -> DEFAULT_TIMEOUTS_MS.connectionRequest(-1));
-    }
-
-    @Test
-    public void negativeSocketTimeoutIsNotAllowed() {
-        assertThrows(IllegalArgumentException.class, () -> DEFAULT_TIMEOUTS_MS.socket(-1));
     }
 }
