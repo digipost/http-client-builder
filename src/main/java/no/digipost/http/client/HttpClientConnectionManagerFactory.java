@@ -18,6 +18,7 @@ package no.digipost.http.client;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 
 import static no.digipost.http.client.HttpClientDefaults.SOCKET_TIMEOUT_MS;
@@ -50,6 +51,8 @@ public final class HttpClientConnectionManagerFactory {
 
         return PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultSocketConfig(createSocketConfig(settings.socketTimeoutMs))
+                .setValidateAfterInactivity(TimeValue.ofSeconds(settings.validateAfterInactivitySeconds))
+                .setConnectionTimeToLive(TimeValue.ofSeconds(settings.connectionTTLSeconds))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
                 .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute);
     }

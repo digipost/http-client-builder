@@ -44,6 +44,17 @@ public final class HttpClientDefaults {
      */
     public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
 
+    /**
+     * Validate connections after inactivity:  {@value #VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND} seconds.
+     */
+    public static final int VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND = 5;
+
+    /**
+     * Connection time to live:  {@value #CONNECTION_TTL_SECONDS} seconds.
+     */
+    public static final int CONNECTION_TTL_SECONDS = 60;
+
+
 
     /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_NORMAL}</strong> connections
