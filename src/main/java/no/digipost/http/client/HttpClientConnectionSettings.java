@@ -33,6 +33,11 @@ public class HttpClientConnectionSettings implements PotentiallyDangerous {
             , HttpClientDefaults.VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND
             , HttpClientDefaults.CONNECTION_TTL_SECONDS);
 
+    public HttpClientConnectionSettings logConfigurationTo(Logger logger) {
+        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds, connectionTTLSeconds);
+    }
+
+
     public HttpClientConnectionSettings connections(HttpClientConnectionAmount connectionAmount) {
         return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds, connectionTTLSeconds);
     }
