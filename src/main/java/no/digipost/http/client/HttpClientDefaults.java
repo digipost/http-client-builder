@@ -49,11 +49,6 @@ public final class HttpClientDefaults {
      */
     public static final int VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND = 5;
 
-    /**
-     * Connection time to live:  {@value #CONNECTION_TTL_SECONDS} seconds.
-     */
-    public static final int CONNECTION_TTL_SECONDS = 60;
-
 
 
     /**

@@ -52,7 +52,6 @@ public final class HttpClientConnectionManagerFactory {
         return PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultSocketConfig(createSocketConfig(settings.socketTimeoutMs))
                 .setValidateAfterInactivity(TimeValue.ofSeconds(settings.validateAfterInactivitySeconds))
-                .setConnectionTimeToLive(TimeValue.ofSeconds(settings.connectionTTLSeconds))
                 .setMaxConnTotal(settings.connectionAmount.maxTotal)
                 .setMaxConnPerRoute(settings.connectionAmount.maxPerRoute);
     }

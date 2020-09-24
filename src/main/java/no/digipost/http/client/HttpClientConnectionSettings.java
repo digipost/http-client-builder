@@ -30,16 +30,15 @@ public class HttpClientConnectionSettings implements PotentiallyDangerous {
             NOPLogger.NOP_LOGGER
             , HttpClientDefaults.CONNECTION_AMOUNT_NORMAL
             , HttpClientDefaults.SOCKET_TIMEOUT_MS
-            , HttpClientDefaults.VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND
-            , HttpClientDefaults.CONNECTION_TTL_SECONDS);
+            , HttpClientDefaults.VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND);
 
     public HttpClientConnectionSettings logConfigurationTo(Logger logger) {
-        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds, connectionTTLSeconds);
+        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds);
     }
 
 
     public HttpClientConnectionSettings connections(HttpClientConnectionAmount connectionAmount) {
-        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds, connectionTTLSeconds);
+        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds);
     }
 
     /**
@@ -48,7 +47,7 @@ public class HttpClientConnectionSettings implements PotentiallyDangerous {
      * secure sockets).
      */
     public HttpClientConnectionSettings socketTimeout(int timeoutsMs) {
-        return new HttpClientConnectionSettings(logger, connectionAmount, timeoutsMs, validateAfterInactivitySeconds, connectionTTLSeconds);
+        return new HttpClientConnectionSettings(logger, connectionAmount, timeoutsMs, validateAfterInactivitySeconds);
     }
 
     /**
@@ -56,17 +55,16 @@ public class HttpClientConnectionSettings implements PotentiallyDangerous {
      * @see <a href="https://hc.apache.org/httpcomponents-client-5.0.x/httpclient5/apidocs/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(org.apache.hc.core5.util.TimeValue)">PoolingHttpClientConnectionManager javadoc</a>
      */
     public HttpClientConnectionSettings validateConnectionAfterInactivity(int seconds) {
-        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, seconds, connectionTTLSeconds);
+        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, seconds);
     }
 
     /**
      * Total time to live (TTL) set at construction time defines maximum life span of persistent connections regardless of their expiration setting. No persistent connection will be re-used past its TTL value.
      *
-     * @param seconds Set to a negative value to disable
      * @see <a href="https://hc.apache.org/httpcomponents-client-5.0.x/httpclient5/apidocs/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.html">PoolingHttpClientConnectionManager javadoc</a>
      */
-    public HttpClientConnectionSettings connectionTTL(int seconds) {
-        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds, seconds);
+    public HttpClientConnectionSettings connectionTTL() {
+        return new HttpClientConnectionSettings(logger, connectionAmount, socketTimeoutMs, validateAfterInactivitySeconds);
     }
 
 
@@ -87,18 +85,17 @@ public class HttpClientConnectionSettings implements PotentiallyDangerous {
     final HttpClientConnectionAmount connectionAmount;
     final int socketTimeoutMs;
     final int validateAfterInactivitySeconds;
-    final int connectionTTLSeconds;
 
     private HttpClientConnectionSettings(
             Logger instantiationLogger
             , HttpClientConnectionAmount connectionAmount
-            , int socketTimeoutMs, int validateAfterInactivitySeconds, int connectionTTLSeconds) {
+            , int socketTimeoutMs
+            , int validateAfterInactivitySeconds) {
 
         this.logger = instantiationLogger;
         this.connectionAmount = connectionAmount;
         this.socketTimeoutMs = Validation.equalOrGreater(socketTimeoutMs, 0, "socket timeout");
         this.validateAfterInactivitySeconds = validateAfterInactivitySeconds;
-        this.connectionTTLSeconds = connectionTTLSeconds;
     }
 
     @Override
