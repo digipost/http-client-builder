@@ -39,3 +39,4 @@ It can be disabled by the following code:
 CloseableHttpClient client = HttpClientFactory.create(HttpClientSettings.DEFAULT.connectionEvictionPolicy(ConnectionEvictionPolicy.NONE));
 ```
 
+PS: If connection monitor is not disabled, and a new connection manager is set after the client builder has been created (i.e `clientBuilder.setConnectionManager(other)`), the 'old' connection monitor will still run and monitor the old connection manager.
