@@ -1,22 +1,22 @@
 /**
  * Copyright (C) Posten Norge AS
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.digipost.http.client3;
+package no.digipost.http.client;
 
 
-public final class DigipostHttpClientDefaults {
+public final class HttpClientDefaults {
 
     /**
      * Socket timeout: {@value #SOCKET_TIMEOUT_MS} ms.
@@ -42,7 +42,12 @@ public final class DigipostHttpClientDefaults {
      *   <li>{@link #CONNECTION_REQUEST_TIMEOUT_MS}: {@value #CONNECTION_REQUEST_TIMEOUT_MS} ms</li>
      * </ul>
      */
-    public static final DigipostHttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new DigipostHttpClientMillisecondTimeouts(SOCKET_TIMEOUT_MS, CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
+    public static final HttpClientMillisecondTimeouts DEFAULT_TIMEOUTS_MS = new HttpClientMillisecondTimeouts(CONNECT_TIMEOUT_MS, CONNECTION_REQUEST_TIMEOUT_MS);
+
+    /**
+     * Validate connections after inactivity:  {@value #VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND} seconds.
+     */
+    public static final int VALIDATE_CONNECTION_AFTER_INACTIVITY_SECOND = 5;
 
 
 
@@ -80,7 +85,6 @@ public final class DigipostHttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_MEDIUM = MAX_CONNECTIONS_PER_ROUTE_MEDIUM;
 
 
-
     /**
      * Maximum <strong>{@value #MAX_CONNECTIONS_PER_ROUTE_HIGH}</strong> connections
      * <em>per route</em> for high amount of traffic.
@@ -98,10 +102,11 @@ public final class DigipostHttpClientDefaults {
     public static final int MAX_CONNECTIONS_TOTAL_HIGH = MAX_CONNECTIONS_PER_ROUTE_HIGH;
 
 
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_NORMAL = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_MEDIUM = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
-    public static final DigipostHttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new DigipostHttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_NORMAL = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_NORMAL, MAX_CONNECTIONS_PER_ROUTE_NORMAL);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_MEDIUM = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_MEDIUM, MAX_CONNECTIONS_PER_ROUTE_MEDIUM);
+    public static final HttpClientConnectionAmount CONNECTION_AMOUNT_HIGH = new HttpClientConnectionAmount(MAX_CONNECTIONS_TOTAL_HIGH, MAX_CONNECTIONS_PER_ROUTE_HIGH);
 
 
-    private DigipostHttpClientDefaults() {}
+    private HttpClientDefaults() {
+    }
 }

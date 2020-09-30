@@ -8,12 +8,14 @@ Licensed under Apache 2 - http://www.apache.org/licenses/LICENSE-2.0.html
 
 This software includes third party software subject to the following licenses:
 
-  Apache Commons Codec under The Apache Software License, Version 2.0
+  Apache Commons Codec under Apache License, Version 2.0
   Apache HttpClient under Apache License, Version 2.0
-  Apache HttpCore under Apache License, Version 2.0
+  Apache HttpComponents Core HTTP/1.1 under Apache License, Version 2.0
+  Apache HttpComponents Core HTTP/2 under Apache License, Version 2.0
   Digipost HTTP Client Builder under The Apache Software License, Version 2.0
   Java Hamcrest under BSD Licence 3
-  JCL 1.2 implemented over SLF4J under MIT License
-  JUnit under Eclipse Public License 1.0
+  JCL 1.2 implemented over SLF4J under Apache License, Version 2.0
+  JUnit Jupiter API under Eclipse Public License v2.0
+  JUnit Platform Commons under Eclipse Public License v2.0
   SLF4J API Module under MIT License
 
