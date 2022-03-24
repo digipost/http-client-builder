@@ -26,17 +26,17 @@ import org.slf4j.LoggerFactory;
  * https://hc.apache.org/httpcomponents-client-ga/tutorial/html/connmgmt.html
  */
 class ConnectionMonitor extends Thread {
-
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final PoolingHttpClientConnectionManager connMgr;
-    private volatile boolean shutdown;
 
     private final Timeout threadTimeout;
     private final TimeValue closeIdleAfter;
 
     ConnectionMonitor(PoolingHttpClientConnectionManager connMgr, ConnectionEvictionPolicy policy) {
         super();
+        // Set to daemon-thread to avoid blocking JVM from shutdown
+        setDaemon(true);
         this.connMgr = connMgr;
         this.threadTimeout = policy.checkInterval;
         this.closeIdleAfter = policy.connectionsIdleLongerThanThreshold;
@@ -44,9 +44,8 @@ class ConnectionMonitor extends Thread {
 
     @Override
     public void run() {
-        addShutdownHook();
         try {
-            while (!shutdown) {
+            while (true) {
                 synchronized (this) {
                     wait(threadTimeout.toMilliseconds());
                     // Close expired connections
@@ -59,18 +58,7 @@ class ConnectionMonitor extends Thread {
                 }
             }
         } catch (InterruptedException ex) {
-            // terminate
-        }
-    }
-
-    private void addShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
-    }
-
-    public void shutdown() {
-        shutdown = true;
-        synchronized (this) {
-            notifyAll();
+            log.info("ConnectionMonitor thread interrupted. Stopping.");
         }
     }
 }
