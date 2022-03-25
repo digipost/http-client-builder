@@ -116,15 +116,19 @@ public final class HttpClientFactory {
             settings.logger.info("New http client:\n{}", settings);
         }
 
-        if (settings.evictionPolicy != ConnectionEvictionPolicy.NONE) {
-            settings.logger.info("Starting ConnectionMonitor-thread");
-            new ConnectionMonitor(clientConnectionManager, settings.evictionPolicy).start();
-        }
 
-        return HttpClientBuilder.create()
+        final HttpClientBuilder builder = HttpClientBuilder.create()
                 .setDefaultRequestConfig(createRequestConfig(settings.timeoutsMs))
                 .setConnectionManager(clientConnectionManager)
                 .setProxy(settings.httpProxy);
+
+        if (settings.evictionPolicy != ConnectionEvictionPolicy.NONE) {
+            builder.evictIdleConnections(settings.evictionPolicy.connectionsIdleLongerThanThreshold);
+            builder.evictExpiredConnections();
+            settings.logger.info("Enabling Apache HttpClient IdleConnectionEvictor with eviction policy: {}", settings.evictionPolicy);
+        }
+
+        return builder;
     }
 
 
