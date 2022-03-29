@@ -27,8 +27,6 @@ public final class ConnectionEvictionPolicy {
     public static ConnectionEvictionPolicy NONE = null;
     public static ConnectionEvictionPolicy DEFAULT = closeConnectionsIdleLongerThan(60);
 
-    final Timeout checkInterval;
-
     /**
      * The idle timeout before evicting the connection.
      */
@@ -36,7 +34,6 @@ public final class ConnectionEvictionPolicy {
 
     private ConnectionEvictionPolicy(TimeValue closeIdleConnectionsAfter) {
         this.connectionsIdleLongerThanThreshold = closeIdleConnectionsAfter;
-        this.checkInterval = closeIdleConnectionsAfter.compareTo(TimeValue.ofSeconds(6)) > 0 ? closeIdleConnectionsAfter.divide(6).toTimeout() : closeIdleConnectionsAfter.min(TimeValue.ofSeconds(1)).toTimeout();
     }
 
     /**
@@ -51,8 +48,7 @@ public final class ConnectionEvictionPolicy {
     @Override
     public String toString() {
         return "ConnectionEvictionPolicy{" +
-                "checkInterval=" + checkInterval +
-                ", connectionsIdleLongerThanThreshold=" + connectionsIdleLongerThanThreshold +
+                "connectionsIdleLongerThanThreshold=" + connectionsIdleLongerThanThreshold +
                 '}';
     }
 }
