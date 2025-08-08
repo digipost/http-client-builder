@@ -29,7 +29,7 @@
     <artifactId>http-client-builder5</artifactId>
     <name>Digipost HTTP Client Builder</name>
     <description>Apache HTTP Client configured with sensible defaults.</description>
-    <version>LOCAL-SNAPSHOT</version>
+    <version>1</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
