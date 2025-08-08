@@ -24,7 +24,7 @@ jobs:
 
   publish:
     needs: build
-    name: Publish ${GITHUB_REF_NAME}
+    name: Publish ${{ github.ref_name }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.2.2
